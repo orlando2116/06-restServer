@@ -14,7 +14,7 @@ app.get('/usuario', function(req, res) {
     let hasta = Number(req.query.hasta) || 5;
 
     //listar usuarios, paginados y que campo queremos mostrar
-    Usuario.find({}, 'nombre email role estado google img')
+    Usuario.find({ estado: true }, 'nombre email role estado google img')
         .skip(desde)
         .limit(hasta)
         .exec((err, usuarios) => {
@@ -99,8 +99,51 @@ app.put('/usuario/:id', function(req, res) {
 
 });
 
-app.delete('/usuario', function(req, res) {
-    res.json('delete usuario');
+app.delete('/usuario/:id', function(req, res) {
+
+    let id = req.params.id;
+    /* Usuario.findByIdAndRemove(id, (err, userDeleted) => {
+         if (err) {
+             return res.status(400).json({
+                 ok: false,
+                 err: err
+             });
+         }
+         if (!userDeleted) {
+             return res.status(400).json({
+                 ok: false,
+                 err: {
+                     message: 'usuario no encontrado'
+                 }
+             });
+         }
+         res.json({
+             ok: true,
+             usuario: userDeleted
+         });
+     })*/
+
+    let obj = { estado: false }
+    Usuario.findByIdAndUpdate(id, obj, { new: true }, (err, userDeleted) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err: err
+            });
+        }
+        if (!userDeleted) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'usuario no encontrado'
+                }
+            });
+        }
+        res.json({
+            ok: true,
+            usuario: userDeleted
+        });
+    });
 });
 
 
