@@ -42,6 +42,16 @@ let usuarioSchema = new Schema({
     }
 });
 
+//excluir contraseña
+usuarioSchema.methods.toJSON = function() {
+    let user = this;
+    let userObject = user.toObject();
+    delete userObject.password;
+
+    return userObject;
+}
+
+
 usuarioSchema.plugin(mongooseHidden, { hidden: { password: true } });
 //unique
 usuarioSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser único' })
