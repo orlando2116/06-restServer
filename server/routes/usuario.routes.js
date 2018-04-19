@@ -6,7 +6,9 @@ const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
-app.get('/usuario', function(req, res) {
+const { verificaToken } = require('../middlewares/autenticacion');
+
+app.get('/usuario', verificaToken, (req, res) => {
 
 
     let desde = Number(req.query.desde) || 0;
