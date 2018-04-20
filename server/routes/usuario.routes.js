@@ -6,11 +6,13 @@ const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
-const { verificaToken } = require('../middlewares/autenticacion');
+const { verificaToken, verificaADMIN_ROLE } = require('../middlewares/autenticacion');
 
 app.get('/usuario', verificaToken, (req, res) => {
 
-
+    //aca ya tenemos al usuario, seteado y rescatado del verifica token
+    //p<ra comprobarlo podemos ver lo siguente
+    console.log(req.usuario);
     let desde = Number(req.query.desde) || 0;
 
     let hasta = Number(req.query.hasta) || 5;
@@ -48,7 +50,7 @@ app.get('/usuario', verificaToken, (req, res) => {
 
 
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificaToken, verificaADMIN_ROLE], function(req, res) {
 
     let body = req.body;
 
@@ -76,7 +78,7 @@ app.post('/usuario', function(req, res) {
     });
 });
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaADMIN_ROLE], function(req, res) {
     let id = req.params.id;
     //libreria instalada. esto sirve para seleccionar solo algunas propiedades de un objeto en particular.
     //en este caso password ni sesion con google se deberian poder actualizar
@@ -101,7 +103,7 @@ app.put('/usuario/:id', function(req, res) {
 
 });
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaADMIN_ROLE], function(req, res) {
 
     let id = req.params.id;
     /* Usuario.findByIdAndRemove(id, (err, userDeleted) => {
