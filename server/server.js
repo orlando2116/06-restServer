@@ -1,5 +1,5 @@
 require('./config/config');
-
+const path = require('path');
 const express = require('express');
 
 // Using Node.js `require()`
@@ -13,6 +13,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+
+
+//habilitar carpeta public para poder llerla de todos lados
+app.use(express.static(path.resolve(__dirname, '../public')));
+
+
 
 app.use(require('./routes/index.routes'));
 
