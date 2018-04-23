@@ -50,6 +50,7 @@ app.get('/productos/:id', (req, res) => {
     let id = req.params.id;
 
     Producto.findById(id)
+        .sort('nombre')
         .populate('usuario', 'nombre email')
         .populate('categoria', 'descripcion')
         .exec((err, productoDB) => {
@@ -74,11 +75,13 @@ app.get('/productos/:id', (req, res) => {
 
 app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
 
+    //creamos exprexion regular, y buscamos. la 'i' es para que no diferencia mayusc. y minusc.
     let termino = req.params.termino;
 
     let regex = new RegExp(termino, 'i');
 
     Producto.find({ nombre: regex })
+        .sort('nombre')
         .populate('categoria', 'descripcion')
         .populate('usuario', 'email nombre')
         .exec((err, productoDB) => {
