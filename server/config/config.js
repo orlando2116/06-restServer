@@ -24,7 +24,7 @@ let urlDB;
 //para borrarlo HEROKU CONFIG:UNSET MONGO_URI
 //DESPUES DE HABERLA CREADO, SE PUEDE USAR, ESTO ES PARA QUE NO QUEDE EXPUESTA EN GITHUB, Y LA RECONOSCA HEROKU
 if (process.env.NODE_ENV === 'dev') {
-    urlDB = 'mongodb://localhost:27017/cafe';
+    urlDB = 'mongodb://localhost:27017/gestion';
 } else {
     urlDB = process.env.MONGO_URI;
 }

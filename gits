@@ -1,0 +1,12 @@
+git init
+git status
+git commit -m ""
+git push origin master
+
+
+
+heroku
+heroku login
+heroku config
+--link--
+git remote add heroku git@heroku.com:project.git

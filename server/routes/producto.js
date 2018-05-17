@@ -101,8 +101,6 @@ app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
 
 
 app.post('/productos', verificaToken, (req, res) => {
-    //grabar el usuario
-    //grabar categoria
 
     let body = req.body;
 
