@@ -100,7 +100,7 @@ app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
 });
 
 
-app.post('/productos', verificaToken, (req, res) => {
+app.post('/productos', (req, res) => {
 
     let body = req.body;
 
@@ -109,7 +109,7 @@ app.post('/productos', verificaToken, (req, res) => {
         precioUni: body.precioUni,
         descripcion: body.descripcion,
         categoria: body.categoria,
-        usuario: req.usuario._id
+        usuario: body.usuario
     });
 
     producto.save((err, productoDB) => {

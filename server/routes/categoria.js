@@ -46,13 +46,13 @@ app.get('/categoria/:id', (req, res) => {
 
 });
 
-app.post('/categoria', verificaToken, (req, res) => {
+app.post('/categoria', (req, res) => {
     let body = req.body;
 
-    console.log(req.usuario);
+
     let categoria = new Categoria({
         descripcion: body.descripcion,
-        usuario: req.usuario._id
+        usuario: body.usuario
     });
 
     categoria.save((err, categoriaDB) => {
